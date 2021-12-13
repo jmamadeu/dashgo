@@ -2,15 +2,23 @@ import { extendTheme } from "@chakra-ui/react";
 import { globalStyles } from "./styles";
 
 export const COLORS = {
-  highlight: "#FF57B2",
-  heading: "#F8F8F8",
-  background: "#1A1D23",
-  info: "#BBBBBB",
-  body: "#D7D7D7"
+  gray: {
+    "900": "#181B23",
+    "800": "#1F2029",
+    "700": "#353646",
+    "600": "#4B4D63",
+    "500": "#616480",
+    "400": "#797D9A",
+    "300": "#9699B0",
+    "200": "#B3B5C6",
+    "100": "#D1D2DC",
+    "50": "#EEEEF2"
+  }
 };
 
 export const FONTS = {
-  body: "Inter"
+  body: "Roboto",
+  heading: "Roboto"
 };
 
 const overrides = {
@@ -20,4 +28,6 @@ const overrides = {
   components: {}
 };
 
-export default extendTheme(overrides);
+const customTheme = extendTheme(overrides);
+
+export { customTheme };

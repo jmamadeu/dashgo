@@ -1,7 +1,10 @@
 export const globalStyles = {
   styles: {
     global: {
-      body: {}
+      body: {
+        bg: "gray.900",
+        color: "gray.50"
+      }
     }
   }
 };
