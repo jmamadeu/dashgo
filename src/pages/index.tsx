@@ -1,7 +1,7 @@
-import { Button, Flex, Stack } from '@chakra-ui/react';
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import { Input } from '../components/form/input';
+import { Button, Flex, Stack } from "@chakra-ui/react";
+import type { NextPage } from "next";
+import Head from "next/head";
+import { Input } from "../components/form/input";
 
 const Home: NextPage = () => (
   <Flex as="main" justify="center" align="center" h="100vh">
