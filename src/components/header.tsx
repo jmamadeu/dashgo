@@ -7,12 +7,12 @@ import {
   IconButton,
   Input,
   Text
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   RiNotificationLine,
   RiSearchLine,
   RiUserAddLine
-} from 'react-icons/ri';
+} from "react-icons/ri";
 
 export const Header = () => (
   <Flex
@@ -48,7 +48,7 @@ export const Header = () => (
         color="gray.50"
         variant="unstyled"
         placeholder="Search"
-        _placeholder={{ color: 'gray.400' }}
+        _placeholder={{ color: "gray.400" }}
         px="4"
         mr="4"
       />
