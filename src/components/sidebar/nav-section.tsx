@@ -17,7 +17,7 @@ export const NavSection = ({ navLinks, title }: NavSectionProps) => (
       {title}
     </Text>
     <Stack spacing="4" mt={8} align="stretch">
-      {navLinks?.map((item) => (
+      {navLinks?.map(item => (
         <NavLink key={item.path} {...item} />
       ))}
     </Stack>

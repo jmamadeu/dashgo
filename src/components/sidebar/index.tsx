@@ -44,7 +44,7 @@ const sidebarItens: NavSectionProps[] = [
 export const SideBar = () => (
   <Box as="aside" w={64} mr={8}>
     <Stack spacing="12" align="flex-start">
-      {sidebarItens.map((item) => (
+      {sidebarItens.map(item => (
         <NavSection key={v4()} {...item} />
       ))}
     </Stack>
