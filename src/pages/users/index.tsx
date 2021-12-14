@@ -92,7 +92,7 @@ const Users: NextPage = () => (
           </Tbody>
         </Table>
 
-        <Pagination />
+        <Pagination defaultCurrentPage={3} pages={10} />
       </Box>
     </Flex>
   </Flex>
