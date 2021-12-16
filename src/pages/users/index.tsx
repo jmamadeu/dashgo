@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Spinner,
   Table,
   Tbody,
   Td,
@@ -17,11 +18,33 @@ import {
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect } from "react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
+import { useQuery } from "react-query";
 import { Header } from "../../components/header";
 import { Pagination } from "../../components/pagination";
 import { SideBar } from "../../components/sidebar";
+import { formatDate } from "../../utils/format";
+
+type UserProperties = {
+  name: string;
+  email: string;
+  id: string;
+  createdAt: string;
+};
+
+type JSONResponse = {
+  users: UserProperties[];
+};
+
+const loadUsers = async (): Promise<UserProperties[]> => {
+  let usersResponse = await fetch("http://localhost:3000/api/users");
+  const userData: JSONResponse = await usersResponse.json();
+
+  return userData.users.map((user) => ({
+    ...user,
+    createdAt: formatDate(user.createdAt)
+  }));
+};
 
 const Users: NextPage = () => {
   const isWideVersion = useBreakpointValue({
@@ -29,16 +52,10 @@ const Users: NextPage = () => {
     lg: true
   });
 
-  useEffect(() => {
-    const loadUsers = async () => {
-      let usersResponse = await fetch("http://localhost:3000/api/users");
-      usersResponse = await usersResponse.json();
-
-      console.log(usersResponse, "users");
-    };
-
-    loadUsers();
-  }, []);
+  const { isLoading, error, data } = useQuery<UserProperties[]>(
+    ["users"],
+    loadUsers
+  );
 
   return (
     <Flex as="main" flexDirection="column">
@@ -72,49 +89,61 @@ const Users: NextPage = () => {
               </Button>
             </Link>
           </Flex>
+          {isLoading ? (
+            <Flex justify="center">
+              <Spinner />
+            </Flex>
+          ) : error ? (
+            <Flex justify="center">
+              <Text>Request failed</Text>
+            </Flex>
+          ) : (
+            <>
+              <Table colorScheme="whiteAlpha">
+                <Thead>
+                  <Tr>
+                    <Th px={[4, 4, 6]} color="gray.300" width="8">
+                      <Checkbox color="pink" />
+                    </Th>
+                    <Th>User</Th>
+                    {isWideVersion && <Th>Created at</Th>}
+                    <Th width={8}></Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {data?.map((user) => (
+                    <Tr key={user.id}>
+                      <Td px={[4, 4, 6]}>
+                        <Checkbox color="pink" />
+                      </Td>
 
-          <Table colorScheme="whiteAlpha">
-            <Thead>
-              <Tr>
-                <Th px={[4, 4, 6]} color="gray.300" width="8">
-                  <Checkbox color="pink" />
-                </Th>
-                <Th>User</Th>
-                {isWideVersion && <Th>Created at</Th>}
-                <Th width={8}></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td px={[4, 4, 6]}>
-                  <Checkbox color="pink" />
-                </Td>
-
-                <Td>
-                  <Box>
-                    <Text fontWeight="bold">João Amadeu</Text>
-                    <Text fontSize="sm" color="gray.300">
-                      jmamadeu@gmail.com
-                    </Text>
-                  </Box>
-                </Td>
-                {isWideVersion && <Td>04 set, 2021</Td>}
-                <Td>
-                  <Button
-                    as="a"
-                    size="sm"
-                    fontSize="sm"
-                    colorScheme="purple"
-                    leftIcon={<Icon as={RiPencilLine} fontSize={16} />}
-                  >
-                    {isWideVersion ? "Edit" : null}
-                  </Button>
-                </Td>
-              </Tr>
-            </Tbody>
-          </Table>
-
-          <Pagination defaultCurrentPage={3} pages={10} />
+                      <Td>
+                        <Box>
+                          <Text fontWeight="bold">{user.name}</Text>
+                          <Text fontSize="sm" color="gray.300">
+                            {user.email}
+                          </Text>
+                        </Box>
+                      </Td>
+                      {isWideVersion && <Td>{user.createdAt}</Td>}
+                      <Td>
+                        <Button
+                          as="a"
+                          size="sm"
+                          fontSize="sm"
+                          colorScheme="purple"
+                          leftIcon={<Icon as={RiPencilLine} fontSize={16} />}
+                        >
+                          {isWideVersion ? "Edit" : null}
+                        </Button>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+              <Pagination defaultCurrentPage={3} pages={10} />
+            </>
+          )}
         </Box>
       </Flex>
     </Flex>
