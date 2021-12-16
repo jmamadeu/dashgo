@@ -1,21 +1,30 @@
 import {
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input as ChakraInput,
   InputProps as ChakraInputProps
 } from "@chakra-ui/react";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
 type InputProps = ChakraInputProps & {
-  name: string;
+  name?: string;
   label?: string;
+  register?: UseFormRegisterReturn;
+  error?: FieldError;
 };
 
-export const Input = ({ name, label, ...rest }: InputProps) => (
-  <FormControl>
-    <FormLabel htmlFor="password">{label}</FormLabel>
+export const Input = ({
+  name,
+  id,
+  label,
+  register,
+  error,
+  ...rest
+}: InputProps) => (
+  <FormControl isInvalid={!!error}>
+    {!!label && <FormLabel htmlFor={id}>{label}</FormLabel>}
     <ChakraInput
-      name={name}
-      id={name}
       focusBorderColor="pink.500"
       bgColor="gray.900"
       variant="filled"
@@ -23,7 +32,10 @@ export const Input = ({ name, label, ...rest }: InputProps) => (
         bgColor: "gray.900"
       }}
       size="lg"
+      name={name}
       {...rest}
+      {...register}
     />
+    {!!error && <FormErrorMessage>{error?.message}</FormErrorMessage>}
   </FormControl>
 );
