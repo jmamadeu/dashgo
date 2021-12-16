@@ -17,6 +17,7 @@ import {
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect } from "react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Header } from "../../components/header";
 import { Pagination } from "../../components/pagination";
@@ -27,6 +28,17 @@ const Users: NextPage = () => {
     base: false,
     lg: true
   });
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      let usersResponse = await fetch("http://localhost:3000/api/users");
+      usersResponse = await usersResponse.json();
+
+      console.log(usersResponse, "users");
+    };
+
+    loadUsers();
+  }, []);
 
   return (
     <Flex as="main" flexDirection="column">
