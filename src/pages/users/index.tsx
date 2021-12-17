@@ -18,44 +18,21 @@ import {
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { useQuery } from "react-query";
 import { Header } from "../../components/header";
 import { Pagination } from "../../components/pagination";
 import { SideBar } from "../../components/sidebar";
-import { formatDate } from "../../utils/format";
-
-type UserProperties = {
-  name: string;
-  email: string;
-  id: string;
-  createdAt: string;
-};
-
-type JSONResponse = {
-  users: UserProperties[];
-};
-
-const loadUsers = async (): Promise<UserProperties[]> => {
-  let usersResponse = await fetch("http://localhost:3000/api/users");
-  const userData: JSONResponse = await usersResponse.json();
-
-  return userData.users.map((user) => ({
-    ...user,
-    createdAt: formatDate(user.createdAt)
-  }));
-};
+import { useUsers } from "../../hooks/useUsers";
 
 const Users: NextPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true
   });
 
-  const { isLoading, error, data } = useQuery<UserProperties[]>(
-    ["users"],
-    loadUsers
-  );
+  const { isLoading, error, data, isFetching } = useUsers(currentPage);
 
   return (
     <Flex as="main" flexDirection="column">
@@ -76,6 +53,9 @@ const Users: NextPage = () => {
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Users
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml={2} />
+              )}
             </Heading>
             <Link href={"/users/create"} passHref>
               <Button
@@ -95,7 +75,7 @@ const Users: NextPage = () => {
             </Flex>
           ) : error ? (
             <Flex justify="center">
-              <Text>Request failed</Text>
+              <Text>{error.message}</Text>
             </Flex>
           ) : (
             <>
@@ -111,7 +91,7 @@ const Users: NextPage = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {data?.map((user) => (
+                  {data?.users?.map((user) => (
                     <Tr key={user.id}>
                       <Td px={[4, 4, 6]}>
                         <Checkbox color="pink" />
@@ -141,7 +121,12 @@ const Users: NextPage = () => {
                   ))}
                 </Tbody>
               </Table>
-              <Pagination defaultCurrentPage={3} pages={10} />
+              <Pagination
+                onPageChange={setCurrentPage}
+                defaultCurrentPage={currentPage}
+                registerPerPage={10}
+                pages={data?.total ?? 1}
+              />
             </>
           )}
         </Box>
