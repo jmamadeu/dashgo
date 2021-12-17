@@ -24,7 +24,7 @@ Some of the core tech stacks are:
 
 ### How to run
 
-To run this web app you must need to install
+To run this web app you must need to install:
 
 >You've Probably already installed it
 
