@@ -7,7 +7,8 @@
     "start": "next start",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --ignore-unknown --config ./prettier.config.js",
     "lint": "eslint --quiet --fix './src/**/*.{ts,tsx}'",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",
@@ -42,7 +43,14 @@
     "eslint-config-next": "12.0.7",
     "git-commit-msg-linter": "^3.2.8",
     "husky": "^7.0.4",
+    "lint-staged": ">=10",
     "prettier": "^2.5.1",
     "typescript": "4.5.3"
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,tsx}": [
+      "yarn lint",
+      "yarn format"
+    ]
   }
 }
