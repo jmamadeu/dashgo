@@ -1,34 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## DashGo
 
-## Getting Started
+Not functional app to simulate a dashboard, exploring the modern way to build a performative and beauty app
 
-First, run the development server:
+[See how it looks like](https://dashgo-jmamadeu.vercel.app/)
+
+<hr>
+
+### Core Techs
+
+Some of the core tech stacks are: 
+
+- [React with NextJS](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Chakra-UI](https://chakra-ui.com/)
+- [React Query](https://react-query.tanstack.com/)
+- [Mirage](https://miragejs.com/)
+- [Faker](https://github.com/marak/Faker.js/)
+
+> Note: This is not a functional app, here's the pages:
+- / => Login page, just too see the form
+- /users => List all of the users
+- /users/create => Create users page
+
+### How to run
+
+To run this web app you must need to install
+
+>You've Probably already installed it
+
+- [NodeJS](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com/) Optional
+
+Before you run the application make sure to see the `.env` file and add all of the keys required and then rename the file to `.env.local`
+
+After that go to your project folder and run:
 
 ```bash
-npm run dev
-# or
-yarn dev
+$ yarn # To install the dependencies
+$ yarn dev # To run the app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Att: You can use npm instead, is up to you.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Made with :heart: by João Amadeu, feel free to reach me out.
